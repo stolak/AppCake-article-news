@@ -16,7 +16,7 @@ class UserRegistration extends Command
 {
     private $registrationRepository;
 
-    protected static $defaultName = 'app:user:registration';
+    protected static $defaultName = 'app:create:user';
 
     public function __construct(RegistrationController $registrationRepository)
     {
