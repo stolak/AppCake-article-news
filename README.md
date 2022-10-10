@@ -8,7 +8,7 @@
 ### symfony console app:create:user
 #### Note: Two user will be created: admin@admin.com and visitor@admin.com both sharing password: 12345
 
-## This can be run as many time as possible it is CLI for download and parsing news
+## This can be run as many times as possible. it is CLI for download and parsing news
 ### symfony console app:news:loader
 
 ### symfony server:start
