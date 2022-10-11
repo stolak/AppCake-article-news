@@ -44,8 +44,8 @@ class NewsApiController extends AbstractController
                 $artice->setDateAdded($rec->publishedAt);
                 $artice->setUpdatedAt($date->format('Y-m-d H:i:s'));
                 $this->bus->dispatch($artice);
-                // $entityManager->persist($artice);
-                // $entityManager->flush();
+                $entityManager->persist($artice);
+                $entityManager->flush();
               }else{
                 $artice= new News();
                 $artice->setTitle($rec->title);
@@ -55,8 +55,8 @@ class NewsApiController extends AbstractController
                 $artice->setDateAdded($rec->publishedAt);
                 $artice->setUpdatedAt($date->format('Y-m-d H:i:s'));
                 $this->bus->dispatch($artice);
-                // $entityManager->persist($artice);
-                // $entityManager->flush();
+                $entityManager->persist($artice);
+                $entityManager->flush();
               }
           }
           return new Response('Successfully downloaded');
