@@ -3,7 +3,7 @@ version: '3'
 services:
 ###> doctrine/doctrine-bundle ###
   database:
-    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    image: mysql:8.0
     environment:
       - MYSQL_DATABASE=article-news
       - MYSQL_USER=root

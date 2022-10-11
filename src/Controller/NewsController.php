@@ -10,14 +10,10 @@ use App\Entity\News;
 use App\Repository\NewsRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class NewsController extends AbstractController
 {
-    private $doctrine;
-    private $client;
-    private const DAYS_BEFORE_REJECTED_REMOVAL = 1;
-
-    
     /**
      * @Route("/news", name="app_news")
      */
@@ -28,7 +24,7 @@ class NewsController extends AbstractController
                         ->createQueryBuilder('p')
                         ->getQuery();
         $pagination = $paginator->paginate(
-            $articleQuery, /* query NOT result */
+            $articleQuery,
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
@@ -53,7 +49,6 @@ class NewsController extends AbstractController
                 'No article found for id '.$id
             );
         }
-
         $entityManager->remove($article);
         $entityManager->flush();
 
