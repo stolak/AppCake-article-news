@@ -33,7 +33,7 @@ class News
     private $picture;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=100)
      */
     private $date_added;
 
