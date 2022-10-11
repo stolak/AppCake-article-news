@@ -9,14 +9,18 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\News;
 use \Datetime;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
+
 class NewsApiController extends AbstractController
 {
     private $doctrine;
     private $client;
-    public function __construct(HttpClientInterface $client, ManagerRegistry $doctrine)
+    private $bus;
+    public function __construct(HttpClientInterface $client, ManagerRegistry $doctrine, MessageBusInterface $bus)
     {
         $this->client = $client;
         $this->doctrine = $doctrine;
+        $this->bus = $bus;
     }
    /**
     * @Route("/news/api", name="app_news_api")
@@ -39,8 +43,9 @@ class NewsApiController extends AbstractController
                 $artice->setPicture($rec->urlToImage);
                 $artice->setDateAdded($rec->publishedAt);
                 $artice->setUpdatedAt($date->format('Y-m-d H:i:s'));
-                $entityManager->persist($artice);
-                $entityManager->flush();
+                $this->bus->dispatch($artice);
+                // $entityManager->persist($artice);
+                // $entityManager->flush();
               }else{
                 $artice= new News();
                 $artice->setTitle($rec->title);
@@ -49,8 +54,9 @@ class NewsApiController extends AbstractController
                 $date=new DateTime();
                 $artice->setDateAdded($rec->publishedAt);
                 $artice->setUpdatedAt($date->format('Y-m-d H:i:s'));
-                $entityManager->persist($artice);
-                $entityManager->flush();
+                $this->bus->dispatch($artice);
+                // $entityManager->persist($artice);
+                // $entityManager->flush();
               }
           }
           return new Response('Successfully downloaded');
